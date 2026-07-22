@@ -1,0 +1,16 @@
+hostname Branch-Router-01
+
+interface GigabitEthernet0/0
+ description Connection to ISP
+ ip address 203.0.113.10 255.255.255.252
+ no shutdown
+
+interface GigabitEthernet0/1
+ description Internal LAN
+ ip address 10.10.10.1 255.255.255.0
+ no shutdown
+
+router ospf 10
+ network 10.10.10.0 0.0.0.255 area 0
+
+ip route 0.0.0.0 0.0.0.0 203.0.113.9
