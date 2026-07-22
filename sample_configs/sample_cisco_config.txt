@@ -13,4 +13,6 @@ interface GigabitEthernet0/1
 router ospf 10
  network 10.10.10.0 0.0.0.255 area 0
 
+router bgp 65001
+
 ip route 0.0.0.0 0.0.0.0 203.0.113.9

@@ -7,6 +7,7 @@ def analyze_cisco_config():
     hostname = "Not found"
     interface_count = 0
     ospf_enabled = False
+    bgp_enabled = False
 
     for line in lines:
         if line.startswith("hostname "):
@@ -18,9 +19,13 @@ def analyze_cisco_config():
         if line.startswith("router ospf "):
             ospf_enabled = True
 
+        if line.startswith("router bgp "):
+            bgp_enabled = True  
+
     print()
     print("Configuration loaded successfully.")
     print(f"Total lines: {len(lines)}")
     print(f"Hostname: {hostname}")
     print(f"Interfaces: {interface_count}")
-    print(f"OSPF Enabled:: {ospf_enabled}")
+    print(f"OSPF Enabled: {ospf_enabled}")
+    print(f"BGP Enabled: {bgp_enabled}")
