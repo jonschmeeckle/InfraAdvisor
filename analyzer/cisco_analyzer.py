@@ -8,6 +8,7 @@ def analyze_cisco_config():
     interface_count = 0
     ospf_enabled = False
     bgp_enabled = False
+    static_route_count = 0
 
     for line in lines:
         if line.startswith("hostname "):
@@ -22,10 +23,19 @@ def analyze_cisco_config():
         if line.startswith("router bgp "):
             bgp_enabled = True  
 
+        if line.startswith("ip route "):
+            static_route_count += 1
+
     print()
-    print("Configuration loaded successfully.")
-    print(f"Total lines: {len(lines)}")
-    print(f"Hostname: {hostname}")
-    print(f"Interfaces: {interface_count}")
-    print(f"OSPF Enabled: {ospf_enabled}")
-    print(f"BGP Enabled: {bgp_enabled}")
+    print("=" * 40)
+    print("Cisco Configuration Summary")
+    print("=" * 40)
+    print()
+    print(f"Hostname:           {hostname:<20}")
+    print(f"Interfaces:         {interface_count}")
+    print()
+    print("Routing")
+    print("-" * 40 )
+    print(f"OSPF Enabled:      {ospf_enabled}")
+    print(f"BGP Enabled:       {bgp_enabled}")
+    print(f"Static Routes:     {static_route_count}")
