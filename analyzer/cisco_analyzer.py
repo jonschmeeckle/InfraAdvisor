@@ -9,6 +9,7 @@ def analyze_cisco_config():
     ospf_enabled = False
     bgp_enabled = False
     static_route_count = 0
+    ntp_configured = False
 
     for line in lines:
         if line.startswith("hostname "):
@@ -26,6 +27,9 @@ def analyze_cisco_config():
         if line.startswith("ip route "):
             static_route_count += 1
 
+        if line.startswith("ntp server "):
+            ntp_configured = True
+
     print()
     print("=" * 40)
     print("Cisco Configuration Summary")
@@ -39,3 +43,7 @@ def analyze_cisco_config():
     print(f"OSPF Enabled:      {ospf_enabled}")
     print(f"BGP Enabled:       {bgp_enabled}")
     print(f"Static Routes:     {static_route_count}")
+    print()
+    print("Services")
+    print("-" * 40)
+    print(f"NTP Configured:    {ntp_configured}")
