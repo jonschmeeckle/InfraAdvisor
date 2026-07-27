@@ -14,6 +14,7 @@ def analyze_cisco_config():
     snmp_v3_configured = False
     snmp_version = "Not Configured"
 
+
     for line in lines:
         if line.startswith("hostname "):
             hostname = line.strip().split(" ", 1)[1]
