@@ -10,6 +10,9 @@ def analyze_cisco_config():
     bgp_enabled = False
     static_route_count = 0
     ntp_configured = False
+    snmp_v2c_configured = False
+    snmp_v3_configured = False
+    snmp_version = "Not Configured"
 
     for line in lines:
         if line.startswith("hostname "):
@@ -29,7 +32,17 @@ def analyze_cisco_config():
 
         if line.startswith("ntp server "):
             ntp_configured = True
-
+        
+        if line.startswith("snmp-server community "):
+            snmp_v2c_configured = True
+        if line.startswith("snmp-server group ") or line.startswith("snmp-server user "):
+            snmp_v3_configured = True
+        if snmp_v2c_configured and snmp_v3_configured:
+            snmp_version = "v2c, v3"
+        elif snmp_v2c_configured:
+            snmp_version = "v2c"
+        elif snmp_v3_configured:
+            snmp_version = "v3"
     print()
     print("=" * 40)
     print("Cisco Configuration Summary")
@@ -47,3 +60,4 @@ def analyze_cisco_config():
     print("Services")
     print("-" * 40)
     print(f"NTP Configured:    {ntp_configured}")
+    print(f"SNMP Version:      {snmp_version}")

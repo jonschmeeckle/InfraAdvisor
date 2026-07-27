@@ -18,3 +18,6 @@ router bgp 65001
 ip route 0.0.0.0 0.0.0.0 203.0.113.9
 
 ntp server 10.1.1.100
+
+snmp-server community public RO
+snmp-server group NMS v3 priv
