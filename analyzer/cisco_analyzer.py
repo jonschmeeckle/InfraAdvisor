@@ -5,7 +5,6 @@ def analyze_cisco_config():
         lines = config_file.readlines()
 
     hostname = "Not found"
-    interface_count = 0
     ospf_enabled = False
     bgp_enabled = False
     static_route_count = 0
@@ -13,7 +12,11 @@ def analyze_cisco_config():
     snmp_v2c_configured = False
     snmp_v3_configured = False
     snmp_version = "Not Configured"
+    # Interface analysis state
+    interface_count = 0
     interfaces_with_description = 0
+    interfaces_shutdown = 0
+
 # Track whether we've already started parsing an interface.
 # This prevents us from evaluating a "previous" interface
 # before we've encountered the first one.
@@ -21,6 +24,9 @@ def analyze_cisco_config():
 # Tracks whether the current interface contains a description.
 # This is evaluated when we reach the next interface (or EOF).
     current_interface_has_description = False
+# Tracks whether the current interface has been administratively disabled
+# using the "shutdown" command. Evaluated when the interface ends.
+    current_interface_is_shutdown = False
 
 
     for line in lines:
@@ -31,15 +37,23 @@ def analyze_cisco_config():
 # contained a description.
         if line.startswith("interface "):
             if inside_interface:
+                # Evaluate previous interface description
                 if current_interface_has_description:
                     interfaces_with_description += 1
+                if current_interface_is_shutdown:
+                    interfaces_shutdown += 1
+                 # Evaluate previous interface shutdown status
 
             interface_count += 1
 
             inside_interface = True
             current_interface_has_description = False
+            current_interface_is_shutdown = False
         if line.strip().startswith("description "):
             current_interface_has_description = True
+
+        if line.strip().startswith("shutdown"):
+            current_interface_is_shutdown = True
 
         if line.startswith("router ospf "):
             ospf_enabled = True
@@ -68,8 +82,11 @@ def analyze_cisco_config():
     if inside_interface:
         if current_interface_has_description:
             interfaces_with_description += 1    
-
     interfaces_without_description = interface_count - interfaces_with_description
+    interfaces_active = interface_count - interfaces_shutdown
+
+    if current_interface_is_shutdown:
+        interfaces_shutdown += 1
 
     print()
     print("=" * 40)
@@ -77,9 +94,12 @@ def analyze_cisco_config():
     print("=" * 40)
     print()
     print(f"Hostname:               {hostname:<20}")
+    # Interface summary
     print(f"Interfaces:             {interface_count}")
     print(f"Interfaces Described:   {interfaces_with_description}")
     print(f"Interfaces Undescribed: {interfaces_without_description}")
+    print(f"Interfaces Shutdown:    {interfaces_shutdown}")
+    print(f"Interfaces Active:      {interfaces_active}")
     print()
     print("Routing")
     print("-" * 40 )
