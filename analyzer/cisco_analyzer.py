@@ -1,3 +1,4 @@
+import json
 def analyze_cisco_config():
     filename = input("Enter the Cisco configuration filename: ")
 
@@ -82,11 +83,34 @@ def analyze_cisco_config():
     if inside_interface:
         if current_interface_has_description:
             interfaces_with_description += 1    
-    interfaces_without_description = interface_count - interfaces_with_description
-    interfaces_active = interface_count - interfaces_shutdown
 
     if current_interface_is_shutdown:
         interfaces_shutdown += 1
+    interfaces_without_description = interface_count - interfaces_with_description
+    interfaces_active = interface_count - interfaces_shutdown
+
+    knowledge_packet = {
+    "device": {
+        "hostname": hostname
+    },
+    "interfaces": {
+        "total": interface_count,
+        "described": interfaces_with_description,
+        "undescribed": interfaces_without_description,
+        "shutdown": interfaces_shutdown,
+        "active": interfaces_active
+    },
+    "routing": {
+        "ospf_enabled": ospf_enabled,
+        "bgp_enabled": bgp_enabled,
+        "static_route_count": static_route_count
+    },
+    "services": {
+        "ntp_configured": ntp_configured,
+        "snmp_version": snmp_version
+    }
+}
+
 
     print()
     print("=" * 40)
