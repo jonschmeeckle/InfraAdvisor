@@ -1,4 +1,7 @@
 import os
+from openai import OpenAI
+
+
 def get_api_key():
     api_key = os.getenv("OPENAI_API_KEY")
 
@@ -8,8 +11,24 @@ def get_api_key():
         )
 
     return api_key
-def load_prompt():
 
+
+def get_openai_client():
+    return OpenAI(api_key=get_api_key())
+
+
+def test_openai_connection():
+    client = get_openai_client()
+
+    response = client.responses.create(
+        model="gpt-5.6",
+        input="Reply with exactly: InfraAdvisor AI connection successful."
+    )
+
+    print(response.output_text)
+
+
+def load_prompt():
     with open("prompts/network_analysis_prompt.txt", "r") as prompt_file:
         return prompt_file.read()
 
@@ -43,6 +62,3 @@ def analyze_with_ai(knowledge_packet):
         analysis.append("No issues detected.")
 
     return analysis
-if __name__ == "__main__":
-    get_api_key()
-    print("OpenAI API key loaded successfully.")
