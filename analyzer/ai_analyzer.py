@@ -1,4 +1,5 @@
 import os
+import json
 from openai import OpenAI
 
 
@@ -32,13 +33,14 @@ def load_prompt():
     with open("prompts/network_analysis_prompt.txt", "r") as prompt_file:
         return prompt_file.read()
 
-def analyze_with_ai(knowledge_packet):
+def analyze_with_rules(knowledge_packet):
     """
-    Simulates how an AI model would analyze a knowledge packet.
-    This will later be replaced with a real LLM.
+    Performs deterministic rule-based analysis of the knowledge packet.
+    Used to compare traditional automation with AI reasoning.
     """
 
     prompt = load_prompt()
+    client = get_openai_client()
 
     analysis = []
 
@@ -62,3 +64,26 @@ def analyze_with_ai(knowledge_packet):
         analysis.append("No issues detected.")
 
     return analysis
+
+
+def analyze_with_ai(knowledge_packet):
+    """
+    Sends the knowledge packet to GPT for AI analysis.
+    """
+
+    prompt = load_prompt()
+    client = get_openai_client()
+
+    knowledge_json = json.dumps(knowledge_packet, indent=2)
+
+    response = client.responses.create(
+        model="gpt-5.6",
+        input=f"""
+{prompt}
+
+Knowledge Packet:
+{knowledge_json}
+"""
+    )
+
+    return [response.output_text]
