@@ -1,4 +1,5 @@
 import json
+from analyzer.ai_analyzer import analyze_with_ai
 def analyze_cisco_config():
     filename = input("Enter the Cisco configuration filename: ")
 
@@ -132,7 +133,7 @@ def analyze_cisco_config():
         "snmp_version": snmp_version
     }
     }
-
+    ai_analysis = analyze_with_ai(knowledge_packet)
 
     print()
     print("=" * 40)
@@ -161,3 +162,9 @@ def analyze_cisco_config():
     print("AI Knowledge Packet")
     print("-" * 40)
     print(json.dumps(knowledge_packet, indent=4))
+    print()
+    print("AI Analysis")
+    print("-" * 40)
+
+    for result in ai_analysis:
+        print(result)
