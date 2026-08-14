@@ -10,6 +10,7 @@ def analyze_cisco_config():
     ospf_enabled = False
     bgp_enabled = False
     static_route_count = 0
+    static_routes = []
     interfaces = []
     ntp_configured = False
     snmp_v2c_configured = False
@@ -33,7 +34,7 @@ def analyze_cisco_config():
     current_interface_is_shutdown = False
     current_interface_name = None
     current_interface_description = None
-
+    current_interface_ip_address = None
 
     for line in lines:
         if line.startswith("hostname "):
@@ -52,6 +53,7 @@ def analyze_cisco_config():
                 interfaces.append({
                     "name": current_interface_name,
                     "description": current_interface_description,
+                    "ip_address": current_interface_ip_address,
                     "admin_status": "down" if current_interface_is_shutdown else "up",
                     "oper_status": "unknown"
                 })
@@ -59,6 +61,7 @@ def analyze_cisco_config():
             interface_count += 1
             current_interface_name = line.strip().split(" ", 1)[1]
             current_interface_description = None
+            current_interface_ip_address = None
 
             inside_interface = True
             current_interface_has_description = False
@@ -66,6 +69,9 @@ def analyze_cisco_config():
         if line.strip().startswith("description "):
             current_interface_has_description = True
             current_interface_description = line.strip().split(" ", 1)[1]
+
+        if line.strip().startswith("ip address "):
+            current_interface_ip_address = line.strip().split(" ", 2)[2]
 
         if line.strip().startswith("shutdown"):
             current_interface_is_shutdown = True
@@ -78,6 +84,7 @@ def analyze_cisco_config():
 
         if line.startswith("ip route "):
             static_route_count += 1
+            static_routes.append(line.strip())
 
         if line.startswith("ntp server "):
             ntp_configured = True
@@ -104,6 +111,7 @@ def analyze_cisco_config():
         interfaces.append({
             "name": current_interface_name,
             "description": current_interface_description,
+            "ip_address": current_interface_ip_address,
             "admin_status": "down" if current_interface_is_shutdown else "up",
             "oper_status": "unknown"
         })
@@ -126,7 +134,8 @@ def analyze_cisco_config():
     "routing": {
         "ospf_enabled": ospf_enabled,
         "bgp_enabled": bgp_enabled,
-        "static_route_count": static_route_count
+        "static_route_count": static_route_count,
+        "static_routes": static_routes
     },
     "services": {
         "ntp_configured": ntp_configured,
@@ -163,8 +172,41 @@ def analyze_cisco_config():
     print("-" * 40)
     print(json.dumps(knowledge_packet, indent=4))
     print()
+
+    print()
     print("AI Analysis")
     print("-" * 40)
 
-    for result in ai_analysis:
-        print(result)
+    for finding in ai_analysis["findings"]:
+        print(f"Interface: {finding['interface']}")
+        print(f"Severity: {finding['severity']}")
+        print()
+        print("Observed Facts:")
+        for fact in finding["observed_facts"]:
+            print(f"- {fact}")
+        print()
+        print("Inferences:")
+        for inference in finding["inferences"]:
+            print(f"- {inference}")
+        print()
+
+        print("Possible Impact:")
+        for impact in finding["possible_impact"]:
+            print(f"- {impact}")
+        print()
+
+        print("Recommended Actions:")
+        for action in finding["recommended_actions"]:
+            print(f"- {action}")
+        print()
+
+        print("Additional Data Needed:")
+        for data in finding["additional_data_needed"]:
+            print(f"- {data}")
+        print()
+
+    print("Overall Priority Summary")
+    print("-" * 40)
+
+    for priority in ai_analysis["overall_priority_summary"]:
+        print(priority)

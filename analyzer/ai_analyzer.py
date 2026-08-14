@@ -83,7 +83,67 @@ def analyze_with_ai(knowledge_packet):
 
 Knowledge Packet:
 {knowledge_json}
-"""
+""",
+        text={
+            "format": {
+                "type": "json_schema",
+                "name": "network_analysis",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "findings": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "interface": {"type": "string"},
+                                    "severity": {
+                                        "type": "string",
+                                        "enum": ["HIGH", "MEDIUM", "LOW"]
+                                    },
+                                    "observed_facts": {
+                                        "type": "array",
+                                        "items": {"type": "string"}
+                                    },
+                                    "inferences": {
+                                        "type": "array",
+                                        "items": {"type": "string"}
+                                    },
+                                    "possible_impact": {
+                                        "type": "array",
+                                        "items": {"type": "string"}
+                                    },
+                                    "recommended_actions": {
+                                        "type": "array",
+                                        "items": {"type": "string"}
+                                    },
+                                    "additional_data_needed": {
+                                        "type": "array",
+                                        "items": {"type": "string"}
+                                    }
+                                },
+                                "required": [
+                                    "interface",
+                                    "severity",
+                                    "observed_facts",
+                                    "inferences",
+                                    "possible_impact",
+                                    "recommended_actions",
+                                    "additional_data_needed"
+                                ],
+                                "additionalProperties": False
+                            }
+                        },
+                        "overall_priority_summary": {
+                            "type": "array",
+                            "items": {"type": "string"}
+                        }
+                    },
+                    "required": ["findings", "overall_priority_summary"],
+                    "additionalProperties": False
+                },
+                "strict": True
+            }
+        }
     )
-
-    return [response.output_text]
+    return json.loads(response.output_text)
