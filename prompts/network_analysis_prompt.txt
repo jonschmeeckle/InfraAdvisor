@@ -9,6 +9,8 @@ For each finding, return the following fields:
 Interface:
 Severity: HIGH, MEDIUM, or LOW
 Severity Reason:
+Confidence: HIGH, MEDIUM, or LOW
+Confidence Reason:
 Observed Facts:
 Inferences:
 Possible Impact:
@@ -24,6 +26,11 @@ Rules:
   - MEDIUM: The available evidence indicates a condition requiring investigation with meaningful potential impact, but an actual service failure is not established.
   - LOW: No failure is established. The finding primarily requires verification or additional telemetry and the available evidence does not indicate meaningful current impact.
 - Severity Reason must briefly explain why the finding meets the selected severity level using only the available evidence and the severity rubric.
+- Assign confidence independently from severity using the following rubric:
+  - HIGH: The available data directly supports the finding with little important information missing.
+  - MEDIUM: The available data supports the finding, but important information is missing that prevents confirmation.
+  - LOW: The finding depends substantially on inference because the available data is incomplete or ambiguous.
+- Confidence Reason must briefly explain why the available evidence supports the selected confidence level.
 - Clearly state when available data is insufficient to reach a conclusion.
 
 At the end, provide an Overall Priority Summary ranking the findings from highest to lowest priority.

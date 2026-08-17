@@ -104,6 +104,13 @@ Knowledge Packet:
                                     "severity_reason": {
                                         "type": "string"
                                     },
+                                    "confidence": {
+                                        "type": "string",
+                                        "enum": ["HIGH", "MEDIUM", "LOW"]
+                                    },
+                                    "confidence_reason": {
+                                        "type": "string"
+                                    },
                                     "observed_facts": {
                                         "type": "array",
                                         "items": {"type": "string"}
@@ -129,6 +136,8 @@ Knowledge Packet:
                                     "interface",
                                     "severity",
                                     "severity_reason",
+                                    "confidence",
+                                    "confidence_reason",
                                     "observed_facts",
                                     "inferences",
                                     "possible_impact",

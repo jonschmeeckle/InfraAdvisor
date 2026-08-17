@@ -181,6 +181,8 @@ def analyze_cisco_config():
         print(f"Interface: {finding['interface']}")
         print(f"Severity: {finding['severity']}")
         print(f"Severity Reason: {finding['severity_reason']}")
+        print(f"Confidence: {finding['confidence']}")
+        print(f"Confidence Reason: {finding['confidence_reason']}")
         print()
         print("Observed Facts:")
         for fact in finding["observed_facts"]:
