@@ -8,6 +8,7 @@ For each finding, return the following fields:
 
 Interface:
 Severity: HIGH, MEDIUM, or LOW
+Severity Reason:
 Observed Facts:
 Inferences:
 Possible Impact:
@@ -18,7 +19,11 @@ Rules:
 - Observed Facts must contain only information directly supported by the provided data.
 - Inferences must be clearly identified as interpretations, not facts.
 - Do not invent information that is not present in the provided data.
-- Severity should reflect potential operational impact and the strength of the available evidence.
+- Assign severity using the following rubric:
+  - HIGH: The available evidence indicates a condition that is likely causing, or could cause, major connectivity or service loss.
+  - MEDIUM: The available evidence indicates a condition requiring investigation with meaningful potential impact, but an actual service failure is not established.
+  - LOW: No failure is established. The finding primarily requires verification or additional telemetry and the available evidence does not indicate meaningful current impact.
+- Severity Reason must briefly explain why the finding meets the selected severity level using only the available evidence and the severity rubric.
 - Clearly state when available data is insufficient to reach a conclusion.
 
 At the end, provide an Overall Priority Summary ranking the findings from highest to lowest priority.
