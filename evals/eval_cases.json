@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Healthy ISP interface",
+    "config_file": "sample_configs/sample_cisco_config_healthy.txt",
+    "interface": "GigabitEthernet0/0",
+    "expected_severity": "LOW",
+    "expected_confidence": "HIGH"
+  }
+]

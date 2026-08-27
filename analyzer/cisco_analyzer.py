@@ -1,7 +1,8 @@
 import json
 from analyzer.ai_analyzer import analyze_with_ai
-def analyze_cisco_config():
-    filename = input("Enter the Cisco configuration filename: ")
+def analyze_cisco_config(filename=None):
+    if filename is None:
+        filename = input("Enter the Cisco configuration filename: ")
 
     with open(filename, "r") as config_file:
         lines = config_file.readlines()
@@ -213,3 +214,5 @@ def analyze_cisco_config():
 
     for priority in ai_analysis["overall_priority_summary"]:
         print(priority)
+        
+    return ai_analysis
