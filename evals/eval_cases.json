@@ -26,5 +26,19 @@
   "interface": "GigabitEthernet0/1",
   "expected_severity": "LOW",
   "expected_confidence": "MEDIUM"
+},
+{
+  "name": "Both down - ISP interface",
+  "config_file": "sample_configs/sample_cisco_config_both_down.txt",
+  "interface": "GigabitEthernet0/0",
+  "expected_severity": "HIGH",
+  "expected_confidence": "MEDIUM"
+},
+{
+  "name": "Both down - LAN interface",
+  "config_file": "sample_configs/sample_cisco_config_both_down.txt",
+  "interface": "GigabitEthernet0/1",
+  "expected_severity": "HIGH",
+  "expected_confidence": "MEDIUM"
 }
 ]
