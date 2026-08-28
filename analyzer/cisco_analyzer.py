@@ -56,7 +56,8 @@ def analyze_cisco_config(filename=None):
                     "description": current_interface_description,
                     "ip_address": current_interface_ip_address,
                     "admin_status": "down" if current_interface_is_shutdown else "up",
-                    "oper_status": "unknown"
+                    "oper_status": "not_available",
+                    "oper_status_reason": "Static configuration does not contain live operational status"
                 })
 
             interface_count += 1
@@ -114,7 +115,8 @@ def analyze_cisco_config(filename=None):
             "description": current_interface_description,
             "ip_address": current_interface_ip_address,
             "admin_status": "down" if current_interface_is_shutdown else "up",
-            "oper_status": "unknown"
+            "oper_status": "not_available",
+            "oper_status_reason": "Static configuration does not contain live operational status"
         })
 
     interfaces_without_description = interface_count - interfaces_with_description

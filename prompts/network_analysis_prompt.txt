@@ -26,11 +26,12 @@ Rules:
   - MEDIUM: The available evidence indicates a condition requiring investigation with meaningful potential impact, but an actual service failure is not established.
   - LOW: No failure is established. The finding primarily requires verification or additional telemetry and the available evidence does not indicate meaningful current impact.
 - Severity Reason must briefly explain why the finding meets the selected severity level using only the available evidence and the severity rubric.
-- Assign confidence independently from severity using the following rubric:
-  - HIGH: The available data directly supports the finding with little important information missing.
-  - MEDIUM: The available data supports the finding, but important information is missing that prevents confirmation.
-  - LOW: The finding depends substantially on inference because the available data is incomplete or ambiguous.
-- Confidence Reason must briefly explain why the available evidence supports the selected confidence level.
+- Confidence measures how strongly the available evidence supports the assigned Severity. It does NOT measure how confident the model is that an outage exists.
+- Assign confidence using the following rubric:
+  - HIGH: The available evidence directly and strongly supports the assigned Severity, with little important information missing that could change that classification.
+  - MEDIUM: The available evidence supports the assigned Severity, but important missing information could change the classification.
+  - LOW: The assigned Severity depends substantially on inference or ambiguous data, and additional evidence could significantly change the classification.
+- Confidence Reason must explain why the available evidence supports the selected confidence level for the assigned Severity.
 - Clearly state when available data is insufficient to reach a conclusion.
 
 At the end, provide an Overall Priority Summary ranking the findings from highest to lowest priority.

@@ -1,3 +1,5 @@
+import io
+from contextlib import redirect_stdout
 import json
 from analyzer.cisco_analyzer import analyze_cisco_config
 
@@ -12,7 +14,8 @@ def main():
     for case in eval_cases:
         print(f"Eval: {case['name']}")
 
-        ai_analysis = analyze_cisco_config(case["config_file"])
+        with redirect_stdout(io.StringIO()):
+            ai_analysis = analyze_cisco_config(case["config_file"])
 
         actual_finding = None
 
