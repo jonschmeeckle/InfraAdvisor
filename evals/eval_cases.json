@@ -19,5 +19,12 @@
   "interface": "GigabitEthernet0/1",
   "expected_severity": "MEDIUM",
   "expected_confidence": "MEDIUM"
+},
+{
+  "name": "Interface missing description",
+  "config_file": "sample_configs/sample_cisco_config_no_description.txt",
+  "interface": "GigabitEthernet0/1",
+  "expected_severity": "LOW",
+  "expected_confidence": "MEDIUM"
 }
 ]
