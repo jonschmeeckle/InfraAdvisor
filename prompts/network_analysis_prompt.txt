@@ -31,6 +31,7 @@ Rules:
   - HIGH: The available evidence directly and strongly supports the assigned Severity, with little important information missing that could change that classification.
   - MEDIUM: The available evidence supports the assigned Severity, but important missing information could change the classification.
   - LOW: The assigned Severity depends substantially on inference or ambiguous data, and additional evidence could significantly change the classification.
+- Confidence must not be HIGH when live operational status is unavailable and that missing status could materially change the assigned Severity.
 - Confidence Reason must explain why the available evidence supports the selected confidence level for the assigned Severity.
 - Clearly state when available data is insufficient to reach a conclusion.
 

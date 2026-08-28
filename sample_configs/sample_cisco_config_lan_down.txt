@@ -1,0 +1,23 @@
+hostname Branch-Router-01
+
+interface GigabitEthernet0/0
+ description Connection to ISP
+ ip address 203.0.113.10 255.255.255.252
+ no shutdown
+
+interface GigabitEthernet0/1
+ description Internal LAN
+ ip address 10.10.10.1 255.255.255.0
+ shutdown
+
+router ospf 10
+ network 10.10.10.0 0.0.0.255 area 0
+
+router bgp 65001
+
+ip route 0.0.0.0 0.0.0.0 203.0.113.9
+
+ntp server 10.1.1.100
+
+snmp-server community public RO
+snmp-server group NMS v3 priv

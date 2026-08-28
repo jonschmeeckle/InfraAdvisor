@@ -12,5 +12,12 @@
     "interface": "GigabitEthernet0/0",
     "expected_severity": "HIGH",
     "expected_confidence": "MEDIUM"
-  }
+  },
+  {
+  "name": "LAN interface administratively down",
+  "config_file": "sample_configs/sample_cisco_config_lan_down.txt",
+  "interface": "GigabitEthernet0/1",
+  "expected_severity": "MEDIUM",
+  "expected_confidence": "MEDIUM"
+}
 ]
