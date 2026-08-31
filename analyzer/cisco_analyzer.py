@@ -9,7 +9,10 @@ def analyze_cisco_config(filename=None):
 
     hostname = "Not found"
     ospf_enabled = False
+    ospf_process_id = None
+    ospf_networks = []
     bgp_enabled = False
+    bgp_asn = None
     static_route_count = 0
     static_routes = []
     interfaces = []
@@ -80,9 +83,14 @@ def analyze_cisco_config(filename=None):
 
         if line.startswith("router ospf "):
             ospf_enabled = True
+            ospf_process_id = line.strip().split(" ", 2)[2]
+        
+        if line.strip().startswith("network ") and ospf_enabled:
+            ospf_networks.append(line.strip())
 
         if line.startswith("router bgp "):
-            bgp_enabled = True  
+            bgp_enabled = True
+            bgp_asn = line.strip().split(" ", 2)[2]
 
         if line.startswith("ip route "):
             static_route_count += 1
@@ -136,7 +144,10 @@ def analyze_cisco_config(filename=None):
     },
     "routing": {
         "ospf_enabled": ospf_enabled,
+        "ospf_process_id": ospf_process_id,
+        "ospf_networks": ospf_networks,
         "bgp_enabled": bgp_enabled,
+        "bgp_asn": bgp_asn,
         "static_route_count": static_route_count,
         "static_routes": static_routes
     },
