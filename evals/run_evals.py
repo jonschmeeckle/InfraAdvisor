@@ -32,12 +32,20 @@ def main():
         severity_pass = (
             actual_finding["severity"] == case["expected_severity"]
         )
+        priority_pass = True
+
+        if "expected_top_priority" in case:
+            first_priority = ai_analysis["overall_priority_summary"][0]
+
+            priority_pass = (
+                case["expected_top_priority"] in first_priority
+            )
 
         confidence_pass = (
             actual_finding["confidence"] == case["expected_confidence"]
         )
 
-        if severity_pass and confidence_pass:
+        if severity_pass and confidence_pass and priority_pass:
             print("Result: PASS")
         else:
             print("Result: FAIL")
@@ -46,6 +54,9 @@ def main():
         print(f"Actual Severity:   {actual_finding['severity']}")
         print(f"Expected Confidence: {case['expected_confidence']}")
         print(f"Actual Confidence:   {actual_finding['confidence']}")
+        if "expected_top_priority" in case:
+            print(f"Expected Top Priority: {case['expected_top_priority']}")
+            print(f"Actual Top Priority:   {ai_analysis['overall_priority_summary'][0]}")
 
 
 if __name__ == "__main__":

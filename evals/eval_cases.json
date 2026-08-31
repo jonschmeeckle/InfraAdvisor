@@ -32,7 +32,8 @@
   "config_file": "sample_configs/sample_cisco_config_both_down.txt",
   "interface": "GigabitEthernet0/0",
   "expected_severity": "HIGH",
-  "expected_confidence": "MEDIUM"
+  "expected_confidence": "MEDIUM",
+  "expected_top_priority": "GigabitEthernet0/0"
 },
 {
   "name": "Both down - LAN interface",
